@@ -1,4 +1,4 @@
-local lib = loadstring(game:HttpGet(''))()
+local lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/sstvskids/uiLib/refs/heads/main/ui.lua'))()
 local stav = lib.library.CreateWindow('Ballz')
 stav:CreateModule({
 	Name = 'Kill Aura',
