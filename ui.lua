@@ -26,21 +26,21 @@ local lplr = playersService.LocalPlayer
 lib.configSys = {
 	canSave = true,
 	filePath = 'an4rchy/configs/'..game.PlaceId..'.json',
-	saveCfg = function(self)
+	saveCfg = function()
 		if runService:IsStudio() then return end
-		if not self.canSave then return end
+		if not lib.configSys.canSave then return end
 		
 		task.delay(0.05, function()
-			writefile(self.file, httpService:JSONEncode(lib.config))
+			writefile(lib.configSys.filePath, httpService:JSONEncode(lib.config))
 		end)
 	end,
-	loadCfg = function(self)
+	loadCfg = function()
 		if runService:IsStudio() then return end
 		
-		if isfile(self.file) then
-			lib.config = httpService:JSONDecode(readfile(self.file))
+		if isfile(lib.configSys.filePath) then
+			lib.config = httpService:JSONDecode(readfile(lib.configSys.filePath))
 		end
-	end,
+	end
 }
 
 local gethui = get_hidden_ui or gethui or function()
@@ -82,7 +82,7 @@ lib.library.CreateNotif = function(title, duration, icon)
 	if icon then
 		local Image = Instance.new('ImageLabel')
 		Image.Size = UDim2.fromScale(0.2, 0.8)
-		Image.Position = UDim2.fromScale(0.01, 0.125)
+		Image.Position = UDim2.fromScale(0.001, 0.1)
 		Image.BackgroundTransparency = 1
 		Image.Image = 'rbxassetid://'..icon
 		Image.ScaleType = Enum.ScaleType.Fit
