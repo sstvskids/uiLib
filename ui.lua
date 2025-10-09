@@ -23,6 +23,12 @@ local playersService = cloneref(game:GetService('Players'))
 local runService = cloneref(game:GetService('RunService'))
 local lplr = playersService.LocalPlayer
 
+for _, v in {'an4rchy', 'an4rchy/configs'} do
+	if not isfolder(v) then
+		makefolder(v)
+	end
+end
+
 lib.configSys = {
 	canSave = true,
 	filePath = 'an4rchy/configs/'..game.PlaceId..'.json',
@@ -233,6 +239,7 @@ lib.library.CreateWindow = function(txt)
 					if Table.Function then
 						task.spawn(Table.Function, self.Enabled)
 					end
+					lib.configSys:saveCfg()
 				end,
 			}
 			
