@@ -156,17 +156,13 @@ lib.library.CreateWindow = function(txt)
 	ModuleFrame.Parent = WindowFrame
 	
 	local ModulePadding = Instance.new('UIPadding')
-	ModulePadding.PaddingTop = UDim.new(0.09)
+	ModulePadding.PaddingTop = UDim.new(0, 6)
 	ModulePadding.Parent = ModuleFrame
-
-	repeat task.wait() until ModulePadding and ModulePadding.PaddingTop and ModulePadding.Parent
 	
 	local ModuleSort = Instance.new('UIListLayout')
 	ModuleSort.SortOrder = Enum.SortOrder.LayoutOrder
 	ModuleSort.Padding = UDim.new(0, 6)
 	ModuleSort.Parent = ModuleFrame
-
-	repeat task.wait() until ModuleSort and ModuleSort.Padding and ModuleSort.Parent
 	
 	table.insert(lib.library, inputService.InputBegan:Connect(function(key, gpe)
 		if gpe then return end
