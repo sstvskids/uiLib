@@ -186,7 +186,7 @@ lib.library.CreateWindow = function(txt)
 			
 			local ModuleButton = Instance.new('Frame')
 			ModuleButton.Size = UDim2.new(1, 0, 0, 32)
-			ModuleButton.BackgroundColor3 = lib.config[Table.Name].Enabled and Color3.fromRGB(29, 29, 29) or Color3.fromRGB(40, 40, 40)
+			ModuleButton.BackgroundColor3 = lib.config[Table.Name].Enabled and Color3.fromRGB(40, 40, 40) or Color3.fromRGB(29, 29, 29)
 			ModuleButton.Parent = ModuleFrame
 			
 			local ModuleCorner = Instance.new('UICorner')
@@ -235,7 +235,7 @@ lib.library.CreateWindow = function(txt)
 					self.Enabled = not self.Enabled
 					lib.config[Table.Name].Enabled = not lib.config[Table.Name].Enabled
 					
-					tweenService:Create(ModuleButton, TweenInfo.new(0.1), {BackgroundColor3 = self.Enabled and Color3.fromRGB(29, 29, 29) or Color3.fromRGB(40, 40, 40)}):Play()
+					tweenService:Create(ModuleButton, TweenInfo.new(0.1), {BackgroundColor3 = self.Enabled and Color3.fromRGB(40, 40, 40) or Color3.fromRGB(29, 29, 29)}):Play()
 					if Table.Function then
 						task.spawn(Table.Function, self.Enabled)
 					end
