@@ -38,7 +38,7 @@ lib.configSys = {
 		if not lib.configSys.canSave then return end
 		
 		task.delay(0.05, function()
-			writefile(lib.configSys.filePath, httpService:JSONEncode(lib.config))
+			writefile(lib.configSys.filePath, httpService:JSONEncode(config))
 		end)
 	end,
 	loadCfg = function()
