@@ -8,9 +8,10 @@
 
 local lib = {
 	library = {},
-	connections = {},
-	config = {}
+	connections = {}
 }
+
+local config = {}
 
 local cloneref = cloneref or function(obj)
 	return obj
@@ -44,7 +45,7 @@ lib.configSys = {
 		if runService:IsStudio() then return end
 		
 		if isfile(lib.configSys.filePath) then
-			lib.config = httpService:JSONDecode(readfile(lib.configSys.filePath))
+			config = httpService:JSONDecode(readfile(lib.configSys.filePath))
 		end
 	end
 }
@@ -72,6 +73,7 @@ if inputService.TouchEnabled then
 end
 
 lib.configSys:loadCfg()
+task.wait(0.1)
 
 lib.library.CreateNotif = function(title, duration, icon)
 	local NotifFrame = Instance.new('Frame')
@@ -177,8 +179,8 @@ lib.library.CreateWindow = function(txt)
 	Windows[txt] = {
 		Modules = {},
 		CreateModule = function(self, Table)
-			if not lib.config[Table.Name] then
-				lib.config[Table.Name] = {
+			if not config[Table.Name] then
+				config[Table.Name] = {
 					Enabled = false,
 					Keybind = 'Unknown',
 					Toggles = {}
@@ -187,7 +189,7 @@ lib.library.CreateWindow = function(txt)
 
 			local ModuleButton = Instance.new('Frame')
 			ModuleButton.Size = UDim2.new(1, 0, 0, 32)
-			ModuleButton.BackgroundColor3 = lib.config[Table.Name].Enabled and Color3.fromRGB(40, 40, 40) or Color3.fromRGB(29, 29, 29)
+			ModuleButton.BackgroundColor3 = config[Table.Name].Enabled and Color3.fromRGB(40, 40, 40) or Color3.fromRGB(29, 29, 29)
 			ModuleButton.Parent = ModuleFrame
 
 			local ModuleCorner = Instance.new('UICorner')
@@ -241,7 +243,7 @@ lib.library.CreateWindow = function(txt)
 			KeybindText.TextXAlignment = Enum.TextXAlignment.Left
 			KeybindText.TextColor3 = Color3.fromRGB(255, 255, 255)
 			KeybindText.TextSize = 15
-			KeybindText.Text = 'Keybind: '..lib.config[Table.Name].Keybind
+			KeybindText.Text = 'Keybind: '..config[Table.Name].Keybind
 			KeybindText.Font = Enum.Font.Montserrat
 			KeybindText.Parent = KeybindButton
 
@@ -251,8 +253,8 @@ lib.library.CreateWindow = function(txt)
 					if gpe then return end
 
 					if key.KeyCode ~= Enum.KeyCode.Unknown then
-						lib.config[Table.Name].Keybind = tostring(key.KeyCode):gsub('Enum.KeyCode.', '')
-						KeybindText.Text = 'Keybind: '..lib.config[Table.Name].Keybind
+						config[Table.Name].Keybind = tostring(key.KeyCode):gsub('Enum.KeyCode.', '')
+						KeybindText.Text = 'Keybind: '..config[Table.Name].Keybind
 						lib.configSys:saveCfg()
 						conn:Disconnect()
 					end
@@ -260,10 +262,10 @@ lib.library.CreateWindow = function(txt)
 			end)
 
 			local moduleHandler = {
-				Enabled = lib.config[Table.Name].Enabled,
+				Enabled = config[Table.Name].Enabled,
 				Toggle = function(self)
 					self.Enabled = not self.Enabled
-					lib.config[Table.Name].Enabled = not lib.config[Table.Name].Enabled
+					config[Table.Name].Enabled = not config[Table.Name].Enabled
 
 					tweenService:Create(ModuleButton, TweenInfo.new(0.1), {BackgroundColor3 = self.Enabled and Color3.fromRGB(40, 40, 40) or Color3.fromRGB(29, 29, 29)}):Play()
 					if Table.Function then
@@ -275,8 +277,8 @@ lib.library.CreateWindow = function(txt)
 			}
 			
 			function moduleHandler.CreateToggle(self, tab)
-				if not lib.config[Table.Name].Toggles[tab.Name] then
-					lib.config[Table.Name].Toggles[tab.Name] = {
+				if not config[Table.Name].Toggles[tab.Name] then
+					config[Table.Name].Toggles[tab.Name] = {
 						Enabled = false
 					}
 				end
@@ -302,17 +304,15 @@ lib.library.CreateWindow = function(txt)
 				ModuleText.Parent = ModuleButton
 				
 				local moduleHandler = {
-					Enabled = lib.config[Table.Name].Toggles[tab.Name].Enabled,
+					Enabled = config[Table.Name].Toggles[tab.Name].Enabled,
 					Toggle = function(self)
 						self.Enabled = not self.Enabled
-						lib.config[Table.Name].Toggles[tab.Name].Enabled = not lib.config[Table.Name].Toggles[tab.Name].Enabled
+						config[Table.Name].Toggles[tab.Name].Enabled = not config[Table.Name].Toggles[tab.Name].Enabled
 
 						tweenService:Create(ModuleButton, TweenInfo.new(0.1), {BackgroundColor3 = self.Enabled and Color3.fromRGB(40, 40, 40) or Color3.fromRGB(29, 29, 29)}):Play()
 						if Table.Function then
 							task.spawn(Table.Function, self.Enabled)
 						end
-						
-						lib.configSys:saveCfg()
 					end,
 				}
 				
@@ -320,7 +320,7 @@ lib.library.CreateWindow = function(txt)
 					moduleHandler:Toggle()
 				end)
 				
-				if lib.config[Table.Name].Toggles[tab.Name].Enabled then
+				if config[Table.Name].Toggles[tab.Name].Enabled then
 					task.delay(0.1, function()
 						moduleHandler:Toggle()
 					end)
@@ -344,7 +344,7 @@ lib.library.CreateWindow = function(txt)
 			inputService.InputBegan:Connect(function(key, gpe)
 				if gpe then return end
 
-				if key.KeyCode ~= Enum.KeyCode.Unknown and key.KeyCode == Enum.KeyCode[lib.config[Table.Name].Keybind] then
+				if key.KeyCode ~= Enum.KeyCode.Unknown and key.KeyCode == Enum.KeyCode[config[Table.Name].Keybind] then
 					moduleHandler:Toggle()
 
 					local enabled = moduleHandler.Enabled and 'ON' or 'OFF'
