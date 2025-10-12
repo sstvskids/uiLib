@@ -325,6 +325,8 @@ lib.library.CreateWindow = function(txt)
 						moduleHandler:Toggle()
 					end)
 				end
+
+				return moduleHandler
 			end
 
 			if moduleHandler.Enabled and table.Function then
