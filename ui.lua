@@ -310,8 +310,8 @@ lib.library.CreateWindow = function(txt)
 						config[Table.Name].Toggles[tab.Name].Enabled = not config[Table.Name].Toggles[tab.Name].Enabled
 
 						tweenService:Create(ModuleButton, TweenInfo.new(0.1), {BackgroundColor3 = self.Enabled and Color3.fromRGB(40, 40, 40) or Color3.fromRGB(29, 29, 29)}):Play()
-						if Table.Function then
-							task.spawn(Table.Function, self.Enabled)
+						if tab.Function then
+							task.spawn(tab.Function, self.Enabled)
 						end
 					end,
 				}
