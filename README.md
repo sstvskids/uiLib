@@ -13,6 +13,6 @@ Comes with config saving, notifications, toggles and keybinds. (Config Saving do
 
 A clean, yet simple library.
 
-Comes with a watermark, keybinds and toggles, fully working uninject.
+Comes with a watermark, keybinds, toggles, and a fully working uninject.
 
 <img width="1624" height="845" alt="image" src="https://github.com/user-attachments/assets/864b61e2-5543-4bd2-97b3-6de6bf0be1d3" />
