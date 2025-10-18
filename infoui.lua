@@ -127,9 +127,9 @@ lib.API.CreateWindow = function(txt)
 			ModuleButton.BackgroundColor3 = cfg[Table.Name].Enabled and Color3.fromRGB(40, 40, 40) or Color3.fromRGB(29, 29, 29)
 			ModuleButton.Parent = ModuleFrame
 			
-			local ModulePadding = Instance.new('UIPadding')
+			--[[local ModulePadding = Instance.new('UIPadding')
 			ModulePadding.PaddingBottom = UDim.new(0, 2)
-			ModulePadding.Parent = ModuleFrame
+			ModulePadding.Parent = ModuleFrame]]
 			
 			local ModuleText = Instance.new('TextButton')
 			ModuleText.Position = UDim2.fromScale(0.05, 0)
@@ -150,8 +150,14 @@ lib.API.CreateWindow = function(txt)
 			DropdownFrame.Visible = not DropdownFrame.Visible
 			DropdownFrame.Parent = ModuleFrame
 			
+			local DropdownPadding = Instance.new('UIPadding')
+			DropdownPadding.PaddingTop = UDim.new(0, -0.5)
+			DropdownPadding.PaddingBottom = UDim.new(0, 2)
+			DropdownPadding.Parent = DropdownFrame
+			
 			local DropdownSort = Instance.new('UIListLayout')
 			DropdownSort.SortOrder = Enum.SortOrder.LayoutOrder
+			ModuleSort.Padding = UDim.new(0, -0.5)
 			DropdownSort.Parent = DropdownFrame
 			
 			local KeybindButton = Instance.new('Frame')
@@ -281,7 +287,7 @@ end
 	- [ stav.lua ] -
 
 	Example
-]]
+
 
 local tabs = {
 	Combat = lib.API.CreateWindow('Combat'),
@@ -292,7 +298,7 @@ local Aura
 local Rotations
 Aura = tabs.Combat:CreateModule({
 	Name = 'Killaura'
-})
+}) -- to turn a module off when its toggled, do Aura:Toggle() (aura) being a placeholder for your variable name
 Rotations = Aura:CreateToggle({
 	Name = 'Rotations'
 })
@@ -311,6 +317,6 @@ tabs.GUI:CreateModule({
 			lib.API.Uninject()
 		end
 	end
-})
+})]]
 
 return lib
